@@ -1,0 +1,260 @@
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); background: var(--color-background-tertiary); color: var(--color-text-primary); }
+nav { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 0 1.5rem; display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
+.nav-logo { font-size: 15px; font-weight: 500; padding: 1rem 0; margin-right: 1.5rem; color: var(--color-text-primary); cursor: pointer; }
+.nav-logo span { color: #c8102e; }
+.nav-btn { font-size: 13px; padding: 0.75rem 1rem; cursor: pointer; border: none; background: none; color: var(--color-text-secondary); border-bottom: 2px solid transparent; transition: color 0.15s; }
+.nav-btn:hover { color: var(--color-text-primary); }
+.nav-btn.active { color: #c8102e; border-bottom-color: #c8102e; font-weight: 500; }
+.page { display: none; padding: 1.5rem; max-width: 860px; margin: 0 auto; }
+.page.active { display: block; }
+.hero { background: linear-gradient(135deg, #c8102e 0%, #9b0e25 100%); color: white; border-radius: var(--border-radius-lg); padding: 2rem; margin-bottom: 1.5rem; }
+.hero h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.5rem; }
+.hero p { font-size: 14px; opacity: 0.9; line-height: 1.6; }
+.hero .event-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+.hero .event-meta span { font-size: 13px; opacity: 0.85; background: rgba(255,255,255,0.15); border-radius: var(--border-radius-md); padding: 4px 10px; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+.card h2 { font-size: 16px; font-weight: 500; margin-bottom: 1rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+.metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem; }
+.metric .label { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.metric .value { font-size: 22px; font-weight: 500; }
+.metric .value.red { color: #c8102e; }
+.team-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; cursor: pointer; transition: border-color 0.15s; }
+.team-card:hover { border-color: #c8102e; }
+.team-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+.team-card .sub { font-size: 13px; color: var(--color-text-secondary); }
+.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+.progress-bar { background: var(--color-background-secondary); border-radius: 4px; height: 8px; margin: 8px 0; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; background: #c8102e; }
+.member-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.member-row:last-child { border-bottom: none; }
+.member-name { font-size: 14px; }
+.member-amount { font-size: 14px; font-weight: 500; color: #c8102e; }
+.donate-btn { background: #c8102e; color: white; border: none; border-radius: var(--border-radius-md); padding: 8px 18px; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; }
+.donate-btn:hover { background: #a00d24; }
+.back-btn { background: none; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 6px 14px; font-size: 13px; cursor: pointer; color: var(--color-text-secondary); margin-bottom: 1rem; }
+.back-btn:hover { background: var(--color-background-secondary); }
+.andrew-hero { display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; }
+.andrew-avatar { width: 80px; height: 80px; border-radius: 50%; background: #c8102e; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; font-weight: 500; flex-shrink: 0; }
+.donut-promo { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; border-radius: var(--border-radius-lg); padding: 1.5rem 2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.donut-icon { font-size: 48px; flex-shrink: 0; }
+.donut-promo h2 { font-size: 20px; font-weight: 500; margin-bottom: 6px; }
+.donut-promo p { font-size: 14px; opacity: 0.9; line-height: 1.6; }
+.schedule { list-style: none; }
+.schedule li { display: flex; gap: 1rem; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 14px; }
+.schedule li:last-child { border-bottom: none; }
+.schedule .time { font-weight: 500; min-width: 80px; color: #c8102e; }
+.tag { background: var(--color-background-info); color: var(--color-text-info); font-size: 12px; padding: 3px 8px; border-radius: var(--border-radius-md); display: inline-block; }
+</style>
+
+<h2 class="sr-only" style="position:absolute;left:-9999px">Tri-Cities Great Strides 2026 website — navigate pages using the top navigation</h2>
+
+<nav>
+  <div class="nav-logo">&#x1F4A8; Great <span>Strides</span> 2026</div>
+  <button class="nav-btn active" onclick="showPage('home')">Home</button>
+  <button class="nav-btn" onclick="showPage('teams')">Teams</button>
+  <button class="nav-btn" onclick="showPage('andrew')">Andrew Holmes</button>
+  <button class="nav-btn" onclick="showPage('donuts')">Get Donuts!</button>
+</nav>
+
+<div id="home" class="page active">
+  <div class="hero">
+    <h1>Tri-Cities Great Strides 2026</h1>
+    <p>Walk with us to cure cystic fibrosis! Every step, every dollar brings us closer to a future where CF no longer controls or shortens anyone's life.</p>
+    <div class="event-meta">
+      <span>&#128197; Saturday, May 30, 2026</span>
+      <span>&#128205; Howard Amon Park, Richland, WA</span>
+      <span>&#127939; 3-Mile Walk + 5K Run</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="metric"><div class="label">Teams registered</div><div class="value red">15</div></div>
+    <div class="metric"><div class="label">Top team raised</div><div class="value red">$9,768</div></div>
+    <div class="metric"><div class="label">Event goal</div><div class="value">$65,000</div></div>
+    <div class="metric"><div class="label">Walk distance</div><div class="value">3 miles</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Event schedule</h2>
+    <ul class="schedule">
+      <li><span class="time">8:00 AM</span><span>Runner check-in opens — pick up bib & shirt</span></li>
+      <li><span class="time">8:30 AM</span><span>5K run starts</span></li>
+      <li><span class="time">9:00 AM</span><span>Walker check-in opens</span></li>
+      <li><span class="time">9:45 AM</span><span>Stage presentation for all participants</span></li>
+      <li><span class="time">10:00 AM</span><span>Team photos & walk starts</span></li>
+      <li><span class="time">11:00 AM</span><span>Walkers return — post-walk pizza lunch!</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Top participants</h2>
+    <div class="member-row"><span class="member-name">&#127942; Kristian Lucas</span><span class="member-amount">$9,768</span></div>
+    <div class="member-row"><span class="member-name">&#129352; Brooke Whittaker</span><span class="member-amount">$2,320</span></div>
+    <div class="member-row"><span class="member-name">&#129353; Andrew Holmes</span><span class="member-amount">$1,220</span></div>
+    <div class="member-row"><span class="member-name">H2 Crew</span><span class="member-amount">$1,000</span></div>
+    <div class="member-row"><span class="member-name">Jeff Whittaker</span><span class="member-amount">$789</span></div>
+    <div style="margin-top:1rem"><a class="donate-btn" href="https://fundraise.cff.org/Tri-Cities2026/Donate" target="_blank">Donate to the event</a></div>
+  </div>
+</div>
+
+<div id="teams" class="page">
+  <div id="team-list">
+    <div class="hero" style="margin-bottom:1.5rem">
+      <h1>Teams</h1>
+      <p>15 teams are registered and walking to cure CF. Click any team to learn more.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card" onclick="showTeam('alpine')"><h3>Alpine Peaks Valvoline</h3><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div><div class="sub">$9,768 raised</div></div>
+      <div class="team-card" onclick="showTeam('quinn')"><h3>All in for Quinn</h3><div class="progress-bar"><div class="progress-fill" style="width:89%"></div></div><div class="sub">$3,109 raised</div></div>
+      <div class="team-card" onclick="showTeam('army')"><h3>Andrew's Army</h3><div class="progress-bar"><div class="progress-fill" style="width:58%"></div></div><div class="sub">$2,020 of $3,500 goal</div></div>
+      <div class="team-card" onclick="showTeam('h2')"><h3>H2CREW</h3><div class="progress-bar"><div class="progress-fill" style="width:28%"></div></div><div class="sub">$1,000 raised</div></div>
+      <div class="team-card" onclick="showTeam('bodhi')"><h3>Bodhi's Brigade</h3><div class="progress-bar"><div class="progress-fill" style="width:19%"></div></div><div class="sub">$655 raised</div></div>
+      <div class="team-card" onclick="showTeam('carter')"><h3>Carter Family / Team Super G!</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+      <div class="team-card" onclick="showTeam('cpcc')"><h3>Central Plateau Cleanup Co.</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+      <div class="team-card" onclick="showTeam('noah')"><h3>Noah's Angels</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+      <div class="team-card" onclick="showTeam('angela')"><h3>Team Angela</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+      <div class="team-card" onclick="showTeam('spocure')"><h3>Spocure</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+      <div class="team-card" onclick="showTeam('sob')"><h3>Shortness of Breath</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+      <div class="team-card" onclick="showTeam('pack')"><h3>Pack Team</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+      <div class="team-card" onclick="showTeam('leyla')"><h3>Leyla's Lifesavers</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+      <div class="team-card" onclick="showTeam('valvc')"><h3>Valvoline Central</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+      <div class="team-card" onclick="showTeam('phone')"><h3>Phone Shop Tri-Cities</h3><div class="sub" style="margin-top:4px">Click to view</div></div>
+    </div>
+  </div>
+
+  <div id="team-detail" style="display:none">
+    <button class="back-btn" onclick="backToTeams()">&#8592; All teams</button>
+    <div id="team-detail-content"></div>
+  </div>
+</div>
+
+<div id="andrew" class="page">
+  <div class="card">
+    <div class="andrew-hero">
+      <div class="andrew-avatar">AH</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+          <h2 style="font-size:18px;font-weight:500;margin:0">Andrew Holmes</h2>
+          <span class="tag">65 Roses Champion</span>
+        </div>
+        <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:12px">Team Andrew's Army · Tri-Cities Great Strides 2026</div>
+        <div class="progress-bar" style="height:10px"><div class="progress-fill" style="width:24.4%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:4px">
+          <span style="font-weight:500;color:#c8102e">$1,220 raised</span>
+          <span style="color:var(--color-text-secondary)">$5,000 goal</span>
+        </div>
+        <div style="margin-top:1rem"><a class="donate-btn" href="https://fundraise.cff.org/Tri-Cities2026/Donate/Index/2093460?submit=Continue" target="_blank">Donate to Andrew</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Andrew's story</h2>
+    <p style="font-size:14px;line-height:1.7;margin-bottom:1rem">Right now, there is no cure for cystic fibrosis, and that means too many people with CF don't get the chance to live long, healthy lives. That's not okay — and that's why Andrew is walking.</p>
+    <p style="font-size:14px;line-height:1.7;margin-bottom:1rem">Cystic fibrosis is a genetic disease that seriously affects the lungs, pancreas, and other vital organs. It makes breathing difficult and causes potentially life-threatening infections that can slowly damage the lungs. Things most of us take for granted — like breathing easily or staying healthy — are daily battles for people with CF.</p>
+    <p style="font-size:14px;line-height:1.7;margin-bottom:1rem">Every person with cystic fibrosis has a different journey, but they all face challenges that no one should have to go through. While medical progress has been made, it's not enough. Too many families are still waiting, hoping, and fighting for a cure.</p>
+    <p style="font-size:14px;line-height:1.7;font-weight:500">We can't wait any longer. Will you help end cystic fibrosis?</p>
+  </div>
+
+  <div class="card">
+    <h2>Andrew's Army team members</h2>
+    <div class="member-row"><span class="member-name">Andrew Holmes</span><span class="member-amount">$1,220</span></div>
+    <div class="member-row"><span class="member-name">Stephen Holmes</span><span class="member-amount">$500</span></div>
+    <div class="member-row"><span class="member-name">Andy Miller</span><span class="member-amount">$100</span></div>
+    <div class="member-row"><span class="member-name">Rory Taylor</span><span class="member-amount">$100</span></div>
+    <div class="member-row"><span class="member-name">Thomas Taylor</span><span class="member-amount">$100</span></div>
+    <div class="member-row"><span class="member-name">Aimee Holmes</span><span class="member-amount">$0</span></div>
+    <div class="member-row"><span class="member-name">Elizabeth Holmes</span><span class="member-amount">$0</span></div>
+    <div class="member-row"><span class="member-name">Martha Mccord</span><span class="member-amount">$0</span></div>
+    <div class="member-row"><span class="member-name">Marty O'Brien</span><span class="member-amount">$0</span></div>
+    <div style="margin-top:1rem"><a class="donate-btn" href="https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=220054" target="_blank">Join Andrew's Army</a></div>
+  </div>
+</div>
+
+<div id="donuts" class="page">
+  <div class="donut-promo">
+    <div class="donut-icon">🍩</div>
+    <div>
+      <h2>Support Andrew's Army and Get Donuts!</h2>
+      <p>Donate to Andrew's Army and help us reach our $3,500 goal — and get rewarded with delicious donuts! Every donation brings us closer to a cure for cystic fibrosis.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>How it works</h2>
+    <p style="font-size:14px;line-height:1.7;margin-bottom:1rem">Make a donation to Andrew's Army in support of the Tri-Cities Great Strides 2026 walk, and you'll earn yourself a fresh box of donuts as a thank-you from the team!</p>
+    <p style="font-size:14px;line-height:1.7;margin-bottom:1.5rem">It's simple: donate, share the word, show up on walk day (May 30th at Howard Amon Park), and enjoy your donuts while cheering on our team.</p>
+    <div class="grid-2" style="margin-bottom:1rem">
+      <div class="metric"><div class="label">Team raised so far</div><div class="value red">$2,020</div></div>
+      <div class="metric"><div class="label">Goal</div><div class="value">$3,500</div></div>
+      <div class="metric"><div class="label">Team members</div><div class="value">9</div></div>
+      <div class="metric"><div class="label">Walk date</div><div class="value" style="font-size:16px">May 30</div></div>
+    </div>
+    <div class="progress-bar" style="height:12px;margin-bottom:8px"><div class="progress-fill" style="width:57.7%"></div></div>
+    <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1.5rem">57% of goal reached — help us cross the finish line!</div>
+    <a class="donate-btn" href="https://fundraise.cff.org/Tri-Cities2026/Donate/Index/2084320?submit=Continue" target="_blank" style="font-size:15px;padding:10px 24px">&#127849; Donate now & claim your donuts</a>
+  </div>
+
+  <div class="card">
+    <h2>About cystic fibrosis</h2>
+    <p style="font-size:14px;line-height:1.7">Cystic fibrosis is a life-threatening genetic disease affecting the lungs and other organs. The Cystic Fibrosis Foundation has made incredible progress, but a cure is still needed. Your donation funds research that saves lives and gives hope to thousands of families.</p>
+  </div>
+</div>
+
+<script>
+const teams = {
+  alpine: { name: 'Alpine Peaks Valvoline', raised: '$9,768', goal: null, members: ['Kristian Lucas — $9,768'], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/222586/Alpine-Peaks-Valvoline', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=222586', pct: 100 },
+  quinn: { name: 'All in for Quinn', raised: '$3,109', goal: null, members: ['Brooke Whittaker — $2,320', 'Jeff Whittaker — $789', 'Quinn Whittaker — $0'], url: 'https://fundraise.cff.org/Tri-Cities2026/AllinforQuinn', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=220053', pct: 88 },
+  army: { name: "Andrew's Army", raised: '$2,020', goal: '$3,500', members: ['Andrew Holmes — $1,220', 'Stephen Holmes — $500', 'Andy Miller — $100', 'Rory Taylor — $100', 'Thomas Taylor — $100', 'Aimee Holmes — $0', 'Elizabeth Holmes — $0', 'Martha Mccord — $0', "Marty O'Brien — $0"], url: 'https://fundraise.cff.org/Tri-Cities2026/AndrewsArmy', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=220054', pct: 58 },
+  h2: { name: 'H2CREW', raised: '$1,000', goal: null, members: ['H2 Crew — $1,000'], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/222567/H2CREW', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=222567', pct: 28 },
+  bodhi: { name: "Bodhi's Brigade", raised: '$655', goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/222592/Bodhis-Brigade', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=222592', pct: 19 },
+  carter: { name: 'Carter Family / Team Super G!', raised: null, goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/222230/Carter-FamilyTeam-Super-G', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=222230', pct: 0 },
+  cpcc: { name: 'Central Plateau Cleanup Company', raised: null, goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/221079/Central-Plateau-Cleanup-Company', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=221079', pct: 0 },
+  noah: { name: "Noah's Angels", raised: null, goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/221515/Noahs-Angels', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=221515', pct: 0 },
+  angela: { name: 'Team Angela', raised: null, goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/223063/Team-Angela', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=223063', pct: 0 },
+  spocure: { name: 'Spocure', raised: null, goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/224706/Spocure', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=224706', pct: 0 },
+  sob: { name: 'Shortness of Breath', raised: null, goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/227032/Shortness-of-Breath', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=227032', pct: 0 },
+  pack: { name: 'Pack Team', raised: null, goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/222024/Pack-Team', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=222024', pct: 0 },
+  leyla: { name: "Leyla's Lifesavers", raised: null, goal: null, members: ['Alicia Enriquez-Myer', 'Selena Enriquez'], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/222774/Leylas-Lifesavers', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=222774', pct: 0 },
+  valvc: { name: 'Valvoline Central', raised: null, goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/223494/Valvoline-Central', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=223494', pct: 0 },
+  phone: { name: 'Phone Shop Tri-Cities', raised: null, goal: null, members: [], url: 'https://fundraise.cff.org/Tri-Cities2026/Team/View/226486/Phone-Shop-Tri-Cities', joinUrl: 'https://fundraise.cff.org/Tri-Cities2026/Account/Register?teamid=226486', pct: 0 },
+};
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const btns = document.querySelectorAll('.nav-btn');
+  const map = {home:0,teams:1,andrew:2,donuts:3};
+  btns[map[id]].classList.add('active');
+}
+
+function showTeam(key) {
+  const t = teams[key];
+  document.getElementById('team-list').style.display = 'none';
+  const detail = document.getElementById('team-detail');
+  detail.style.display = 'block';
+  const membersHtml = t.members.length ? t.members.map(m => `<div class="member-row"><span class="member-name">${m.split(' — ')[0]}</span><span class="member-amount">${m.split(' — ')[1] || ''}</span></div>`).join('') : '<p style="font-size:14px;color:var(--color-text-secondary)">View the full team on the official page.</p>';
+  const progressHtml = t.pct > 0 ? `<div class="progress-bar"><div class="progress-fill" style="width:${t.pct}%"></div></div>` : '';
+  detail.querySelector('#team-detail-content').innerHTML = `
+    <div class="card">
+      <h2 style="font-size:18px">${t.name}</h2>
+      ${t.raised ? `<div style="font-size:20px;font-weight:500;color:#c8102e;margin-bottom:4px">${t.raised} raised${t.goal ? ` of ${t.goal} goal` : ''}</div>` : ''}
+      ${progressHtml}
+      <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="donate-btn" href="${t.url}" target="_blank">View on CFF</a>
+        <a class="donate-btn" href="${t.joinUrl}" target="_blank" style="background:none;border:0.5px solid #c8102e;color:#c8102e">Join team</a>
+      </div>
+    </div>
+    ${t.members.length ? `<div class="card"><h2>Team members</h2>${membersHtml}</div>` : ''}
+  `;
+}
+
+function backToTeams() {
+  document.getElementById('team-list').style.display = 'block';
+  document.getElementById('team-detail').style.display = 'none';
+}
+</script>
